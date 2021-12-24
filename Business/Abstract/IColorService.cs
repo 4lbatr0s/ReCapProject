@@ -10,5 +10,8 @@ namespace Business.Abstract
         void Add(Color Color);
         void Delete(Color Color);
         void Update(Color Color);
+        
+        List<Color> GetByColorName(string name);
+        
     }
 }

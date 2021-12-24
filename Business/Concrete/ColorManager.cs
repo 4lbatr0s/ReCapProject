@@ -25,10 +25,17 @@ namespace Business.Concrete
             return _ColorDal.GetAll();
         }
 
+        public List<Color> GetByColorName(string name)
+        {
+            return _ColorDal.GetAll(c => c.ColorName == name);
+        }
+
         public Color GetById(int ColorId)
         {
             return _ColorDal.Get(Color => Color.ColorId == ColorId);
         }
+
+        
 
         public void Update(Color Color)
         {

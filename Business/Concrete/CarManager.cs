@@ -74,43 +74,4 @@ namespace Business.Concrete
             _carDal.Update(car);
         }
     }
-
-    public class BrandManager:IBrandService
-    {
-        private readonly IBrandDal _brandDal;
-
-        public BrandManager(IBrandDal brandDal)
-        {
-            _brandDal = brandDal;
-        }
-        public void Add(Brand Brand)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Brand Brand)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Brand> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Brand GetByCountry(string countrName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Brand GetById(int BrandId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Brand Brand)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
