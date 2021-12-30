@@ -10,6 +10,11 @@ namespace Business.Concrete
     {
         private readonly IBrandDal _brandDal;
 
+        public BrandManager(IBrandDal brandDal)
+        {
+            _brandDal = brandDal;
+        }
+
         public void Add(Brand Brand)
         {
             _brandDal.Add(Brand);

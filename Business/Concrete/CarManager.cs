@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using System.Linq.Expressions;
+using Entities.Dto;
 
 namespace Business.Concrete
 {
@@ -59,12 +60,17 @@ namespace Business.Concrete
             return _carDal.Get(c => c.CarId == carId);
         }
 
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }
+
         public List<Car> GetCarsByBrandId(int brandId)
         {
             return _carDal.GetAll(c => c.BrandId == brandId);
         }
 
-        public List<Car> GetCarsByColorId(string colorId)
+        public List<Car> GetCarsByColorId(int colorId)
         {
             return _carDal.GetAll(c => c.ColorId == colorId);
         }

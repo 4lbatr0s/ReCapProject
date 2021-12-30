@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using Core.DataAccess;
+using Entities;
+using Entities.Dto;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,6 @@ namespace DataAccess.Abstract
     public interface ICarDal:IEntityRepository<Car> //an interface is not public by default by it's functions are.
      {
         //this is where we do CRUD+ operations on the database. 
-
+        List<CarDetailDto> GetCarDetails();
     }
 }
