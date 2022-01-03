@@ -22,7 +22,7 @@ namespace Console_UI
             //CarTestUpdate();
             //CarDeleteTest();
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var item in carManager.GetCarDetails())
+            foreach (var item in carManager.GetCarDetails().Data)
             {
                 Console.WriteLine("Car Name:{0}, Brand Name:{1}, Color Name:{2}, Daily Price:{3}\n", item.Description, item.BrandName, item.ColorName, item.DailyPrice);
             }
@@ -36,8 +36,8 @@ namespace Console_UI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var opel = carManager.GetById(2);//Opel
-            carManager.Delete(opel);
-            foreach (var item in carManager.GetAll())
+            carManager.Delete(opel.Data);
+            foreach (var item in carManager.GetAll().Data)
             {
                 Console.WriteLine(item.Description); //opel deleted.
             }
@@ -85,7 +85,7 @@ namespace Console_UI
         private static void CarTestGeyByBrandId()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var item in carManager.GetCarsByBrandId(1))
+            foreach (var item in carManager.GetCarsByBrandId(1).Data)
             {
                 Console.WriteLine(item.Description + " " + item.BrandId);
             }
@@ -95,7 +95,7 @@ namespace Console_UI
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var item in carManager.GetAll())
+            foreach (var item in carManager.GetAll().Data)
             {
                 Console.WriteLine(item.Description);
             }
