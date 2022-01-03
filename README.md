@@ -1,1 +1,1 @@
-![UML diagram](ReCapUML.png)
+![UML diagram](ReCapUML.PNG)
