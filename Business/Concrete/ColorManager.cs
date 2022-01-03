@@ -3,43 +3,58 @@ using Entities;
 using System;
 using System.Collections.Generic;
 using DataAccess.Abstract;
+using Core.Utilities.Results;
+using Business.Constants;
 
 namespace Business.Concrete
 {
     public class ColorManager:IColorService
     {
-        private readonly IColorDal _ColorDal;
+        private readonly IColorDal _colorDal;
 
-        public void Add(Color Color)
+        public ColorManager(IColorDal colorDal)
         {
-            _ColorDal.Add(Color);
+            _colorDal = colorDal;
         }
 
-        public void Delete(Color Color)
+        public IResult Add(Color Color)
         {
-            _ColorDal.Delete(Color);
+            _colorDal.Add(Color);
+            return new SuccessResult(Messages.ColorAdded);
         }
 
-        public List<Color> GetAll()
+       
+
+        public IResult Delete(Color Color)
         {
-            return _ColorDal.GetAll();
+            _colorDal.Delete(Color);
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public List<Color> GetByColorName(string name)
+    
+
+        public IDataResult<List<Color>> GetAll()
         {
-            return _ColorDal.GetAll(c => c.ColorName == name);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.AllColorListed);
+            
         }
 
-        public Color GetById(int ColorId)
+        public IDataResult<List<Color>> GetByColorName(string name)
         {
-            return _ColorDal.Get(Color => Color.ColorId == ColorId);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorName == name));
+        }
+
+        public IDataResult<Color> GetById(int ColorId)
+        {
+            return new SuccessDataResult<Color>(_colorDal.Get(Color => Color.ColorId == ColorId));
         }
 
         
 
-        public void Update(Color Color)
+        public IResult Update(Color Color)
         {
-            _ColorDal.Update(Color);
+            _colorDal.Update(Color);
+            return new SuccessResult(Messages.ColorUpdated);
         }
     }
 }

@@ -3,6 +3,8 @@ using Entities;
 using System;
 using System.Collections.Generic;
 using DataAccess.Abstract;
+using Core.Utilities.Results;
+using Business.Constants;
 
 namespace Business.Concrete
 {
@@ -15,34 +17,37 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand Brand)
+        public IResult Add(Brand Brand)
         {
             _brandDal.Add(Brand);
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public void Delete(Brand Brand)
+        public IResult Delete(Brand Brand)
         {
             _brandDal.Delete(Brand);
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.AllBrandsListed);
         }
 
-        public List<Brand> GetByCountry(string countrName)
+        public IDataResult<List<Brand>> GetByCountry(string countrName)
         {
-            return _brandDal.GetAll(brand => brand.BrandCountry == countrName);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(c => c.BrandCountry == countrName));
         }
 
-        public Brand GetById(int BrandId)
+        public IDataResult<Brand> GetById(int BrandId)
         {
-            return _brandDal.Get(brand => brand.BrandId == BrandId);
+            return new SuccessDataResult<Brand>(_brandDal.Get(brand => brand.BrandId == BrandId));
         }
 
-        public void Update(Brand Brand)
+        public IResult Update(Brand Brand)
         {
             _brandDal.Update(Brand);
+            return new SuccessResult(Messages.BrandUpdated);
         }
     }
 }
