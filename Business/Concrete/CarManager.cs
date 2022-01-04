@@ -27,13 +27,14 @@ namespace Business.Concrete
               if (car.Description.Length >= 2 && car.DailyPrice > 0)
                 {
                     _carDal.Add(car);
+                    return new SuccessResult(Messages.CarAdded);
                 }
               else
                 {
                      return new ErrorResult(Messages.CarNotAdded);
                 }
 
-            return new SuccessResult(Messages.CarAdded);
+             
 
         }
 
