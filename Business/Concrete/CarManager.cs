@@ -10,6 +10,8 @@ using System.Linq.Expressions;
 using Entities.Dto;
 using Core.Utilities.Results;
 using Business.Constants;
+using Core.Aspects.Autofac.Validation;
+using Business.ValidationRules.FluentValidation;
 
 namespace Business.Concrete
 {
@@ -22,20 +24,11 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect (typeof(CarValidator))] //throw exception if request body does not fill the requirements.
         public IResult Add(Car car)
         {
-              if (car.Description.Length >= 2 && car.DailyPrice > 0)
-                {
-                    _carDal.Add(car);
-                    return new SuccessResult(Messages.CarAdded);
-                }
-              else
-                {
-                     return new ErrorResult(Messages.CarNotAdded);
-                }
-
-             
-
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
