@@ -27,15 +27,22 @@ namespace Business.Constants
         public static string UserAdded = "User is added";
         public static string UserDeleted = "User is deleted";
         public static string AllUsersListed = "All users are listed";
-        public static object UserUpdated = "User is updated";
-        public static object CustomerAdded = "Customer is added";
+        public static string UserUpdated = "User is updated";
+        public static string CustomerAdded = "Customer is added";
         public static string CustomerDeleted = "Customer is deleted";
         public static string AllCustomersListed = "All customers are listed";
         public static string CustomerUpdated = "Customer is updated";
+
         public static string InvalidRental = "Return date cannot be null";
         public static string RentalAdded = "Rental is added";
         public static string RentalDeleted = "Rental is deleted";
         public static string AllRentalsListed = "All rentals are listed";
         public static string RentalUpdated = "Rental is updated";
+
+        public static string CarImageIsAdded = "Car image is added";
+        public static string CarImageCountIsExceeded = "Image count for the car is exceeded.";
+        public static string AllCarImagesAreListed = "All car images are listed";
+        public static string CarImageIsUpdated = "Car image is updated";
+        public static string CarImageIsDeleted = "Car image is deleted";
     }
 }

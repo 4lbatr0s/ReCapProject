@@ -15,7 +15,7 @@ namespace Core.Utilities.Results
         }
 
 
-        public SuccessResult(object carUpdated) :base(true)
+        public SuccessResult() :base(true)
         {
 
         }

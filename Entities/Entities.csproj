@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Abstract\" />
+    <Folder Include="CarImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.13" />
   </ItemGroup>
 
   <ItemGroup>
