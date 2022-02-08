@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete.Dto
 {
-    public class UserForRegisterDto:IDto
+    public class UserForLoginDto : IDto
     {
         public string Email { get; set; }
         public string Password { get; set; }
     }
-    public class UserForLoginDto: IDto
+    public class UserForRegisterDto: IDto
     {
         public string Email { get; set; }
         public string Password { get; set; }

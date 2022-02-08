@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,7 +47,17 @@ namespace Business.Constants
         public static string CarImageIsUpdated = "Car image is updated";
         public static string CarImageIsDeleted = "Car image is deleted";
 
-        public static string CarImageDoesNotExist { get; internal set; }
-        public static string CarImageDoesExists { get; internal set; }
+        public static string CarImageDoesNotExist = "Car image does not exist.";
+        public static string CarImageDoesExists = "Car image does exist";
+
+        public static string AuthorizationDenied = "Authorization is denied";
+
+        public static string AccessTokenCreated = "Access token is created";
+
+        public static User PasswordError { get; internal set; }
+        public static string SuccessfulLogin { get; internal set; }
+        public static User UserNotFound { get; internal set; }
+        public static string UserAlreadyExists { get; internal set; }
+        public static string UserRegistered { get; internal set; }
     }
 }

@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
             _carService = carService;
         }
 
-        [HttpGet("getallcars")]
+        [HttpGet("allcars")]
         public IActionResult GetAll()
         {
             var result = _carService.GetAll(); //has three values, Data, Success and Message.
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getcarbyid")]
+        [HttpGet("byid")]
         public IActionResult GetById(int carId)
         {
             var result = _carService.GetById(carId);
@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getcarsbybrandid")]
+        [HttpGet("bybrandid")]
         public IActionResult GetCarsByBrandId(int brandId)
         {
             var result = _carService.GetCarsByBrandId(brandId);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getcarsbycolorid")]
+        [HttpGet("bycolorid")]
         public IActionResult GetCarsByColorId(int brandId)
         {
             var result = _carService.GetCarsByColorId(brandId);
@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("createcar")]
+        [HttpPost("create")]
         public IActionResult Add(Car car) //this car object is actually the client's request
         {
             var result = _carService.Add(car);
@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("deletecar")]
+        [HttpPost("delete")]
         public IActionResult Delete(Car car) //this car object is actually the client's request
         {
             var result = _carService.Delete(car);
@@ -99,7 +99,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("updatecar")]
+        [HttpPost("update")]
         public IActionResult Update(Car car) //this car object is actually the client's request
         {
             var result = _carService.Update(car);
@@ -113,7 +113,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("cardetails")]
+        [HttpGet("details")]
         public IActionResult GetCarDetails()
         {
             var result = _carService.GetCarDetails();

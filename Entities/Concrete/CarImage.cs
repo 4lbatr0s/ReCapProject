@@ -18,8 +18,7 @@ namespace Entities.Concrete
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CarImageId { get; set; }
 
-        [ForeignKey("CarId")]
-        public Car Car { get; set; }
+        [ForeignKey("Car")]
         public int CarId { get; set; }
 
         public string ImagePath { get; set; }

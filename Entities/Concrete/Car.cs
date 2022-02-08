@@ -10,12 +10,10 @@ namespace Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CarId { get; set; }
 
-        [ForeignKey("BrandId")]
-        public Brand Brand { get; set; }
+        [ForeignKey("Brand")]
         public int BrandId { get; set; }
 
-        [ForeignKey("ColorId")]
-        public Color Color { get; set; }
+        [ForeignKey("Color")]
         public int ColorId { get; set; }
 
         public int ModelYear { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ReCapDBContext))]
-    [Migration("20220208074900_Initial")]
+    [Migration("20220208135231_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,10 +66,6 @@ namespace DataAccess.Migrations
 
                     b.HasKey("CarId");
 
-                    b.HasIndex("BrandId");
-
-                    b.HasIndex("ColorId");
-
                     b.ToTable("Cars");
                 });
 
@@ -112,8 +108,6 @@ namespace DataAccess.Migrations
 
                     b.HasKey("CarImageId");
 
-                    b.HasIndex("CarId");
-
                     b.ToTable("CarImages");
                 });
 
@@ -127,15 +121,10 @@ namespace DataAccess.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Id")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("CustomerId");
-
-                    b.HasIndex("Id");
 
                     b.ToTable("Customers");
                 });
@@ -176,10 +165,6 @@ namespace DataAccess.Migrations
 
                     b.HasKey("RentalId");
 
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("CustomerId");
-
                     b.ToTable("Rentals");
                 });
 
@@ -199,14 +184,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -217,7 +202,8 @@ namespace DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("OperationClaimId")
                         .HasColumnType("int");
@@ -228,83 +214,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserOperationClaims");
-                });
-
-            modelBuilder.Entity("Entities.Car", b =>
-                {
-                    b.HasOne("Entities.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("Color");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.CarImage", b =>
-                {
-                    b.HasOne("Entities.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Customer", b =>
-                {
-                    b.HasOne("Entities.Concrete.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Rental", b =>
-                {
-                    b.HasOne("Entities.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Concrete.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.UserOperationClaim", b =>
-                {
-                    b.HasOne("Entities.Concrete.OperationClaim", "OperationClaim")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Concrete.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OperationClaim");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         }
 
          
-        [HttpGet("getallusers")]
+        [HttpGet("allusers")]
         public IActionResult GetAll()
         {
             var result = _userService.GetAll(); //has three values, Data, Success and Message.
@@ -31,7 +31,21 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getuserbyid")]
+        [HttpGet("byemail")]
+        public IActionResult GetById(string email)
+        {
+            var result = _userService.GetByMail(email);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+        [HttpGet("byid")]
         public IActionResult GetById(int userId)
         {
             var result = _userService.GetById(userId);

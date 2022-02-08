@@ -9,15 +9,9 @@ namespace Entities.Concrete
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-
-        [ForeignKey("Id")]
-        public User User { get; set; }
+        [ForeignKey("User")]
         public int UserId { get; set; }
-
-
-        [ForeignKey("Id")]
-        public OperationClaim OperationClaim { get; set; }
+        [ForeignKey("OperationClaim")]
         public int OperationClaimId { get; set; }
     }
 }

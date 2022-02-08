@@ -15,12 +15,10 @@ namespace Entities.Concrete
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RentalId { get; set; }
         
-        [ForeignKey("CarId")]
-        public Car Car { get; set; }
+        [ForeignKey("Car")]
         public int CarId { get; set; }
 
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        [ForeignKey("Customer")]
         public int CustomerId { get; set; }
 
         public DateTime RentDate { get; set; }

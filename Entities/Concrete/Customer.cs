@@ -15,8 +15,7 @@ namespace Entities.Concrete
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
 
-        [ForeignKey("Id")]
-        public User User { get; set; }
+        [ForeignKey("User")]
         public int UserId { get; set;}
         public string CompanyName { get; set; }
 
