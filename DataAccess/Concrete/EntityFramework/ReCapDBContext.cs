@@ -14,9 +14,10 @@ namespace DataAccess.Concrete.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) //this method decides to which db our db is connected. 
         {
             //base.OnConfiguring(optionsBuilder); 
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ReCapDB;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=BRCK623;Database=ReCapDB;Trusted_Connection=true");
 
         }
+
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -25,5 +26,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<CarImage> CarImages { get; set;}
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
     }
 }

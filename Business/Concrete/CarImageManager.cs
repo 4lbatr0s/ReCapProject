@@ -32,7 +32,7 @@ namespace Business.Concrete
             {   
                 return result; //returns the business rule unfittings if there are any.
             } //it will return the error value, no need for a second call.
-            carImage.ImagePath = Paths.ImagesPath + _fileHelper.Upload(file, Paths.ImagesPath);
+            carImage.ImagePath = Paths.ImagesPath + _fileHelper.Upload(file, Paths.ImagesPath); //_fileHelper.Upload() returns fileName therefore ImagePath equals (Paths.ImagesPath + fileName)
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageIsAdded);
@@ -46,7 +46,9 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImage>> GetById(int carId)
         {
-            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carId));
+            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carId),
+                CheckIfCarImageDoesExists(carId)
+                );
             if(result != null)
             {
                 return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
@@ -69,6 +71,12 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
+            var result = BusinessRules.Run(CheckIfCarImageDoesExists(carImage.CarId)
+                );
+            if (result != null)
+            {
+                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carImage.CarId).Data);
+            }
             _fileHelper.Delete(Paths.ImagesPath + carImage.ImagePath);
             _carImageDal.Delete(carImage);
              return new SuccessResult(Messages.CarImageIsDeleted);
@@ -85,11 +93,20 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageIsAdded);
         }
 
-        private IDataResult<List<CarImage>> GetDefaultImage(int carId)
-        {
+        private IDataResult<List<CarImage>> GetDefaultImage(int carId)        {
             List<CarImage> carImages = new List<CarImage>();
             carImages.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "Default.jpg" });
             return new SuccessDataResult<List<CarImage>>();
+        }
+
+        private IResult CheckIfCarImageDoesExists(int carImageId)
+        {
+            var result = _carImageDal.Get(c => c.CarImageId == carImageId);
+            if(result == null)
+            {
+                return new ErrorResult(Messages.CarImageDoesNotExist);
+            }
+            return new SuccessResult(Messages.CarImageDoesExists);
         }
     }
 }

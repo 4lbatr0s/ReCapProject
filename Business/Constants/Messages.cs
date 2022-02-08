@@ -44,5 +44,8 @@ namespace Business.Constants
         public static string AllCarImagesAreListed = "All car images are listed";
         public static string CarImageIsUpdated = "Car image is updated";
         public static string CarImageIsDeleted = "Car image is deleted";
+
+        public static string CarImageDoesNotExist { get; internal set; }
+        public static string CarImageDoesExists { get; internal set; }
     }
 }
