@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         }
 
          
-        [HttpGet("allusers")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var result = _userService.GetAll(); //has three values, Data, Success and Message.
@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpPost("createuser")]
+        [HttpPost("create")]
         public IActionResult Add(User user) //this user object is actually the client's request
         {
             var result = _userService.Add(user);
@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("deleteuser")]
+        [HttpPost("delete")]
         public IActionResult Delete(User user) //this car object is actually the client's request
         {
             var result = _userService.Delete(user);
@@ -88,7 +88,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("updateuser")]
+        [HttpPost("update")]
         public IActionResult Update(User user) //this car object is actually the client's request
         {
             var result = _userService.Update(user);

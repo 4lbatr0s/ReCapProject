@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         }
 
          
-        [HttpGet("getallusers")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var result = _customerService.GetAll(); //has three values, Data, Success and Message.
@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getuserbyid")]
+        [HttpGet("byid")]
         public IActionResult GetById(int customerId)
         {
             var result = _customerService.GetById(customerId);
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpPost("createuser")]
+        [HttpPost("create")]
         public IActionResult Add(Customer Customer) //this Customer object is actually the client's request
         {
             var result = _customerService.Add(Customer);
@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("deletecustomer")]
+        [HttpPost("delete")]
         public IActionResult Delete(Customer Customer) //this car object is actually the client's request
         {
             var result = _customerService.Delete(Customer);
@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("updatecustomer")]
+        [HttpPost("update")]
         public IActionResult Update(Customer customer) //this car object is actually the client's request
         {
             var result = _customerService.Update(customer);

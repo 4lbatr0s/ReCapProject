@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
             _carService = carService;
         }
 
-        [HttpGet("allcars")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var result = _carService.GetAll(); //has three values, Data, Success and Message.

@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
             _brandService = brandService;
         }
 
-        [HttpGet("getallbrands")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var result = _brandService.GetAll(); //has three values, Data, Success and Message.
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getbrandbyid")]
+        [HttpGet("byid")]
         public IActionResult GetById(int carId)
         {
             var result = _brandService.GetById(carId);
@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getbrandsbycountries")]
+        [HttpGet("bycountry")]
         public IActionResult GetCarsByBrandId(string countryName)
         {
             var result = _brandService.GetByCountry(countryName);
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
         }
  
 
-        [HttpPost("createbrand")]
+        [HttpPost("create")]
         public IActionResult Add(Brand brand) //this car object is actually the client's request
         {
             var result = _brandService.Add(brand);
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("deletebrand")]
+        [HttpPost("delete")]
         public IActionResult Delete(Brand brand) //this car object is actually the client's request
         {
             var result = _brandService.Delete(brand);
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("updatebrand")]
+        [HttpPost("update")]
         public IActionResult Update(Brand brand) //this car object is actually the client's request
         {
             var result = _brandService.Update(brand);

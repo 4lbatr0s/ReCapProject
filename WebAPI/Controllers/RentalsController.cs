@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         }
 
          
-        [HttpGet("getallusers")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var result = _rentalService.GetAll(); //has three values, Data, Success and Message.
@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("getrentalbyid")]
+        [HttpGet("byid")]
         public IActionResult GetById(int rentalId)
         {
             var result = _rentalService.GetById(rentalId);
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpPost("createrental")]
+        [HttpPost("create")]
         public IActionResult Add(Rental rental) //this rental object is actually the client's request
         {
             var result = _rentalService.Add(rental);
@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("deleterental")]
+        [HttpPost("delete")]
         public IActionResult Delete(Rental rental) //this car object is actually the client's request
         {
             var result = _rentalService.Delete(rental);
@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("updaterental")]
+        [HttpPost("update")]
         public IActionResult Update(Rental rental) //this car object is actually the client's request
         {
             var result = _rentalService.Update(rental);
