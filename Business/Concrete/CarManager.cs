@@ -13,6 +13,7 @@ using Business.Constants;
 using Core.Aspects.Autofac.Validation;
 using Business.ValidationRules.FluentValidation;
 using Business.BusinessAspects.Autofac;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,7 @@ namespace Business.Concrete
 
         [SecuredOperation("admin")]
         [ValidationAspect (typeof(CarValidator))] //throw exception if request body does not fill the requirements.
+        [CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
         public IResult Add(Car car)
         {
             _carDal.Add(car);
@@ -34,6 +36,7 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -41,6 +44,7 @@ namespace Business.Concrete
         }
 
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.AllCarListed);
@@ -70,6 +74,7 @@ namespace Business.Concrete
 
 
         [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
         public IResult Update(Car car)
         {
             _carDal.Update(car);

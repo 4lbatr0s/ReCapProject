@@ -1,5 +1,8 @@
-﻿using Core.Utilities.IoC;
+﻿using Core.CrossCuttingConcern.Caching;
+using Core.CrossCuttingConcern.Caching.Microsoft;
+using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,7 +16,9 @@ namespace Core.DependencyResolvers
     {
         public void Load(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddMemoryCache(); //it's a handy Injection, creates an ICacheManager instance on the background.
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();//tomorrow by just changing MemoryCacheManager to AnotherCacheManager, we can completely change our caching service.
         }
     }
 }
