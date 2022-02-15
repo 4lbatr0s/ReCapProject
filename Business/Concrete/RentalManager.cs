@@ -1,8 +1,11 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
+using System;
 using System.Collections.Generic;
 
 namespace Business.Concrete
@@ -10,9 +13,15 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         private readonly IRentalDal _rentalDal;
-        public RentalManager(IRentalDal rentalDal) => _rentalDal = rentalDal; //constructor
-        public IResult Add(Rental rental)
+        private readonly IMapper _mapper;
+        public RentalManager(IRentalDal rentalDal, IMapper mapper)
         {
+            _rentalDal = rentalDal;
+            _mapper = mapper;
+        }
+        public IResult Add(RentalForCreationDto rentalForCreationDto)
+        {
+            var rental = _mapper.Map<Rental>(rentalForCreationDto);
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -28,7 +37,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.AllRentalsListed);
         }
 
-        public IDataResult<Rental> GetById(int rentalId)
+        public IDataResult<Rental> GetById(Guid rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId));
         }

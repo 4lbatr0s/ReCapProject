@@ -1,5 +1,7 @@
+using AutoMapper;
 using Business.Abstract;
 using Business.Concrete;
+using Business.DependencyResolvers.Automapper;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -39,8 +41,20 @@ namespace WebAPI
         {
 
             services.AddControllers();
+            services.AddCors();
 
 
+            //AutoMapper configuration
+            var mapperConfig = new MapperConfiguration(mc =>
+            {      
+                mc.AddProfile(new MappingProfile()); //Mapping Profile comes from Business/DependencyResolvers/AutoMapper
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
+            services.AddMvc();
+            
+            //token configuration
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -60,7 +74,7 @@ namespace WebAPI
             //we can create different modules for different goals and thanks to AddDependencyResolvers function
             //we'll be able to configure them here alltogether.
             services.AddDependencyResolvers(new ICoreModule[] {
-                new CoreModule()
+                new CoreModule(),
             });
 
             services.AddSwaggerGen(c =>
@@ -75,12 +89,15 @@ namespace WebAPI
         {
             if (env.IsDevelopment())
             {
+                app.UseCors();
                 app.UseDeveloperExceptionPage();        //originally "/swagger/v1/swagger.json", "WebAPI v1"
                 app.UseSwagger();                       //./v1/swagger.json", "WebAPI v1"
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
-            
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+
 
             app.UseHttpsRedirection();
 

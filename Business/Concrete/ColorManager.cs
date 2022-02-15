@@ -4,21 +4,26 @@ using System.Collections.Generic;
 using DataAccess.Abstract;
 using Core.Utilities.Results;
 using Business.Constants;
+using System;
+using Entities.Dto;
+using AutoMapper;
 
 namespace Business.Concrete
 {
     public class ColorManager:IColorService
     {
         private readonly IColorDal _colorDal;
-
-        public ColorManager(IColorDal colorDal)
+        private readonly IMapper _mapper;
+        public ColorManager(IColorDal colorDal, IMapper mapper)
         {
             _colorDal = colorDal;
+            _mapper = mapper;
         }
 
-        public IResult Add(Color Color)
+        public IResult Add(ColorForCreationDto colorForCreationDto)
         {
-            _colorDal.Add(Color);
+            var color = _mapper.Map<Color>(colorForCreationDto);
+            _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
         }
 
@@ -43,7 +48,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorName == name));
         }
 
-        public IDataResult<Color> GetById(int ColorId)
+        public IDataResult<Color> GetById(Guid ColorId)
         {
             return new SuccessDataResult<Color>(_colorDal.Get(Color => Color.ColorId == ColorId));
         }

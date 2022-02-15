@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,7 +9,7 @@ namespace Entities.Concrete
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set;}
+        public Guid Id { get; set;}
         public string Name { get; set; }
     }
 }

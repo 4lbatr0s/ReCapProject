@@ -13,13 +13,13 @@ namespace Entities.Concrete
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RentalId { get; set; }
+        public Guid RentalId { get; set; }
         
         [ForeignKey("Car")]
-        public int CarId { get; set; }
+        public Guid CarId { get; set; }
 
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         public DateTime RentDate { get; set; }
         public DateTime? ReturnDate { get; set; }

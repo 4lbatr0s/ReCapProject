@@ -37,8 +37,6 @@ namespace Business.DependencyResolvers.Autofac
 
 
 
-
-
             var assembly = System.Reflection.Assembly.GetExecutingAssembly(); //From the executed program
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces() //find the implemented interfaces which are above (IProduct,ICategory etc..)

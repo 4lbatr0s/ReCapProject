@@ -1,7 +1,10 @@
 using Business.Abstract;
+using Core.Entities;
 using Entities;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -32,7 +35,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(int customerId)
+        public IActionResult GetById(Guid customerId)
         {
             var result = _customerService.GetById(customerId);
             if (result.Success)
@@ -47,9 +50,10 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult Add(Customer Customer) //this Customer object is actually the client's request
+        public IActionResult Add(CustomerCreationDto customerCreationDto) //this Customer object is actually the client's request
         {
-            var result = _customerService.Add(Customer);
+
+            var result = _customerService.Add(customerCreationDto);
             if (result.Success)
             {
                 return Ok(result);

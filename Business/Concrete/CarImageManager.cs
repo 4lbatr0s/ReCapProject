@@ -1,10 +1,12 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.BusinessRules;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -18,14 +20,17 @@ namespace Business.Concrete
     {
         private readonly ICarImageDal _carImageDal;
         private readonly IFileHelper _fileHelper;
-        public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper)
+        private readonly IMapper _mapper;
+        public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper, IMapper mapper)
         {
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
+            _mapper = mapper;
         }
 
-        public IResult UploadImage(IFormFile file, CarImage carImage)
+        public IResult UploadImage(IFormFile file, CarImageForCreationDto carImageForCreationDto)
         {
+            var carImage = _mapper.Map<CarImage>(carImageForCreationDto);
             var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId)
                );
             if(result!= null)
@@ -44,7 +49,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.AllCarImagesAreListed);
         }
 
-        public IDataResult<List<CarImage>> GetById(int carId)
+        public IDataResult<List<CarImage>> GetById(Guid carId)
         {
             var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carId),
                 CheckIfCarImageDoesExists(carId)
@@ -83,7 +88,7 @@ namespace Business.Concrete
         }
 
 
-        private IResult CheckIfCarImageNumberIsExceed(int carId)
+        private IResult CheckIfCarImageNumberIsExceed(Guid carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
             if (result>=5)
@@ -93,13 +98,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageIsAdded);
         }
 
-        private IDataResult<List<CarImage>> GetDefaultImage(int carId)        {
+        private IDataResult<List<CarImage>> GetDefaultImage(Guid carId)        {
             List<CarImage> carImages = new List<CarImage>();
             carImages.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "Default.jpg" });
             return new SuccessDataResult<List<CarImage>>();
         }
 
-        private IResult CheckIfCarImageDoesExists(int carImageId)
+        private IResult CheckIfCarImageDoesExists(Guid carImageId)
         {
             var result = _carImageDal.Get(c => c.CarImageId == carImageId);
             if(result == null)

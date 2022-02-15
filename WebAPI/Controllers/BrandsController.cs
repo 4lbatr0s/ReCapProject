@@ -1,6 +1,8 @@
 using Business.Abstract;
 using Entities;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -9,7 +11,6 @@ namespace WebAPI.Controllers
     public class BrandsController : ControllerBase
     {
         private readonly IBrandService _brandService;
-
         public BrandsController(IBrandService brandService)
         {
             _brandService = brandService;
@@ -30,7 +31,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(int carId)
+        public IActionResult GetById(Guid carId)
         {
             var result = _brandService.GetById(carId);
             if (result.Success)
@@ -59,7 +60,7 @@ namespace WebAPI.Controllers
  
 
         [HttpPost("create")]
-        public IActionResult Add(Brand brand) //this car object is actually the client's request
+        public IActionResult Add(BrandForCreationDto brand) //this car object is actually the client's request
         {
             var result = _brandService.Add(brand);
             if (result.Success)

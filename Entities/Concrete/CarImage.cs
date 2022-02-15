@@ -16,10 +16,10 @@ namespace Entities.Concrete
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CarImageId { get; set; }
+        public Guid CarImageId { get; set; }
 
         [ForeignKey("Car")]
-        public int CarId { get; set; }
+        public Guid CarId { get; set; }
 
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }

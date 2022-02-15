@@ -1,7 +1,9 @@
 using Business.Abstract;
 using Entities;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -32,7 +34,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(int rentalId)
+        public IActionResult GetById(Guid rentalId)
         {
             var result = _rentalService.GetById(rentalId);
             if (result.Success)
@@ -47,9 +49,9 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult Add(Rental rental) //this rental object is actually the client's request
+        public IActionResult Add(RentalForCreationDto rentalForCreationDto) //this rental object is actually the client's request
         {
-            var result = _rentalService.Add(rental);
+            var result = _rentalService.Add(rentalForCreationDto);
             if (result.Success)
             {
                 return Ok(result);

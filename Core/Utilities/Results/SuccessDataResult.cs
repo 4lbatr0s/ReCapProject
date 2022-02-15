@@ -17,7 +17,7 @@ namespace Core.Utilities.Results
         public SuccessDataResult(string text) : base(default, false, text)
         {}
 
-        public SuccessDataResult() : base(default, false)
+        public SuccessDataResult() : base(default, true)
         {}
     }
 }

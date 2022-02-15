@@ -2,6 +2,7 @@ using Business.Abstract;
 using Entities;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -46,7 +47,7 @@ namespace WebAPI.Controllers
             }
         }
         [HttpGet("byid")]
-        public IActionResult GetById(int userId)
+        public IActionResult GetById(Guid userId)
         {
             var result = _userService.GetById(userId);
             if (result.Success)

@@ -1,5 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete.Dto;
+using Core.Utilities.Results;
 using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 
 namespace Business.Abstract
@@ -7,7 +9,7 @@ namespace Business.Abstract
     public interface IUserService
     {
         IDataResult<List<User>> GetAll();
-        IDataResult<User> GetById(int userId);
+        IDataResult<User> GetById(Guid userId);
         IDataResult<User> GetByMail(string mail);
         IResult Add(User user);
         IResult Update(User user);

@@ -1,6 +1,8 @@
 using Business.Abstract;
 using Entities;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -30,7 +32,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(int carId)
+        public IActionResult GetById(Guid carId)
         {
             var result = _carService.GetById(carId);
             if (result.Success)
@@ -44,7 +46,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("bybrandid")]
-        public IActionResult GetCarsByBrandId(int brandId)
+        public IActionResult GetCarsByBrandId(Guid brandId)
         {
             var result = _carService.GetCarsByBrandId(brandId);
             if (result.Success)
@@ -58,7 +60,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("bycolorid")]
-        public IActionResult GetCarsByColorId(int brandId)
+        public IActionResult GetCarsByColorId(Guid brandId)
         {
             var result = _carService.GetCarsByColorId(brandId);
             if (result.Success)
@@ -72,9 +74,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Add(Car car) //this car object is actually the client's request
+        public IActionResult Add(CarForCreationDto carForCreationDto) //this car object is actually the client's request
         {
-            var result = _carService.Add(car);
+            var result = _carService.Add(carForCreationDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -86,9 +88,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Car car) //this car object is actually the client's request
+        public IActionResult Delete(Guid id) //this car object is actually the client's request
         {
-            var result = _carService.Delete(car);
+            var result = _carService.Delete(id);
             if (result.Success)
             {
                 return Ok(result);

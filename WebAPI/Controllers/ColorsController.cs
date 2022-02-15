@@ -1,5 +1,6 @@
 using Business.Abstract;
 using Entities;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -45,9 +46,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Add(Color color)
+        public IActionResult Add(ColorForCreationDto colorForCreationDto)
         {
-            var result = _colorService.Add(color);
+            var result = _colorService.Add(colorForCreationDto);
             if(result.Success)
             {
                 return Ok(result);

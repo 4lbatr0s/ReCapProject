@@ -16,6 +16,7 @@ namespace Business.Constants
         public static string CarAdded = "Car added";
         public static string CarDetails = "Car details are brought";
         public static string CarUpdated = "Car is updated";
+        public static string CarDoesNotExist = "Car doesn't exist";
 
         public static string BrandDeleted = "Brand is deleted";
         public static string AllBrandsListed = "All brands are listed";

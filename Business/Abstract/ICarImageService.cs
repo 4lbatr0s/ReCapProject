@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        IResult UploadImage(IFormFile file, CarImage carImage);
+        IResult UploadImage(IFormFile file, CarImageForCreationDto carImage);
         IDataResult<List<CarImage>> GetAll();
-        IDataResult<List<CarImage>> GetById(int carImageId);
+        IDataResult<List<CarImage>> GetById(Guid carImageId);
 
         IResult Delete(CarImage carImage);
         IResult Update(IFormFile file, CarImage carImage);

@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
      {
         //this is where we do CRUD+ operations on the database. 
         List<CarDetailDto> GetCarDetails();
+        List<CarForGetAllDto> GetCarsDto();
     }
 }

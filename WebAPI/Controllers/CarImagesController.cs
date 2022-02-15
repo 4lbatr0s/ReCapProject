@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,7 +24,7 @@ namespace WebAPI.Controllers
 
        
         [HttpPost("upload")]
-        public IActionResult UploadImage([FromForm] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult UploadImage([FromForm] IFormFile file, [FromForm] CarImageForCreationDto carImage)
         {
             var result = _carImageService.UploadImage(file, carImage);
             if(result.Success)
@@ -51,7 +52,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(int carImageId)
+        public IActionResult GetById(Guid carImageId)
         {
             var result = _carImageService.GetById(carImageId);
             if (result.Success)

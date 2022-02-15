@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,10 +9,10 @@ namespace Entities.Concrete
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         [ForeignKey("OperationClaim")]
-        public int OperationClaimId { get; set; }
+        public Guid OperationClaimId { get; set; }
     }
 }

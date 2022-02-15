@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,13 +9,13 @@ namespace Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CarId { get; set; }
+        public Guid CarId { get; set; }
 
         [ForeignKey("Brand")]
-        public int BrandId { get; set; }
+        public Guid BrandId { get; set; }
 
         [ForeignKey("Color")]
-        public int ColorId { get; set; }
+        public Guid ColorId { get; set; }
 
         public int ModelYear { get; set; }
         public decimal DailyPrice { get; set; }

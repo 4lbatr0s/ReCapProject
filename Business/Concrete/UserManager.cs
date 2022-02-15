@@ -1,5 +1,7 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete.Dto;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -15,7 +17,7 @@ namespace Business.Concrete
     {
         private readonly IUserDal _userDal;
 
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal, IMapper mapper)
         {
             _userDal = userDal;
         }
@@ -37,7 +39,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.AllUsersListed);
         }
 
-        public IDataResult<User> GetById(int userId)
+        public IDataResult<User> GetById(Guid userId)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId));
         }

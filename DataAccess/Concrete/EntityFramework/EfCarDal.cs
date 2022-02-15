@@ -29,6 +29,28 @@ namespace DataAccess.Concrete.EntityFramework
                 return allDetails.ToList(); //return queryable to list.
              }
         }
-    
+
+        public List<CarForGetAllDto> GetCarsDto()
+        {
+            using(ReCapDBContext context = new ReCapDBContext())
+            {
+                var allDetails = from car in context.Cars
+                                 join brand in context.Brands
+                                 on car.BrandId equals brand.BrandId
+                                 join color in context.Colors
+                                 on car.ColorId equals color.ColorId
+                                 select new CarForGetAllDto
+                                 {
+                                     CarId = car.CarId,
+                                     BrandName = brand.BrandName,
+                                     ColorName = color.ColorName,
+                                     DailyPrice = car.DailyPrice,
+                                     Description = car.Description,
+                                     ModelYear = car.ModelYear
+                                 };
+                return allDetails.ToList();
+            }
+            
+        }
     }
 }
