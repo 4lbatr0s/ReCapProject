@@ -74,8 +74,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageIsUpdated);
         }
 
-        public IResult Delete(CarImage carImage)
+        public IResult Delete(Guid id)
         {
+            var carImage = _carImageDal.Get(cid => cid.CarImageId == id);
             var result = BusinessRules.Run(CheckIfCarImageDoesExists(carImage.CarId)
                 );
             if (result != null)

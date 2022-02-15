@@ -12,6 +12,6 @@ namespace Business.Abstract
         IDataResult<Customer> GetById(Guid customerId);
         IResult Add(CustomerCreationDto customer);
         IResult Update(Customer customer);
-        IResult Delete(Customer customer);
+        IResult Delete(Guid id);
     }
 }

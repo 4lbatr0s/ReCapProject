@@ -33,9 +33,10 @@ namespace Business.Concrete
 
         
 
-        public IResult Delete(Customer customer)
+        public IResult Delete(Guid id)
         {
-            _customerDal.Delete(customer);
+            var result = _customerDal.Get(c => c.CustomerId== id);
+            _customerDal.Delete(result);
             return new SuccessResult(Messages.CustomerDeleted);
         }
 

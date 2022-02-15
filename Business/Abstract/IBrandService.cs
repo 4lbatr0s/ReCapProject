@@ -12,7 +12,7 @@ namespace Business.Abstract
         IDataResult<Brand> GetById(Guid BrandId);
         IDataResult<List<Brand>> GetByCountry(string countrName);
         IResult Add(BrandForCreationDto brandForCreationDto);
-        IResult Delete(Brand Brand);
+        IResult Delete(Guid guid);
         IResult Update(Brand Brand);
     }
 }

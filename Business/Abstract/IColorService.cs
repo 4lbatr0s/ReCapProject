@@ -11,7 +11,7 @@ namespace Business.Abstract
         IDataResult<List<Color>> GetAll();
         IDataResult<Color> GetById(Guid ColorId);
         IResult Add(ColorForCreationDto Color);
-        IResult Delete(Color Color);
+        IResult Delete(Guid id);
         IResult Update(Color Color);
         IDataResult<List<Color>> GetByColorName(string name);
         
