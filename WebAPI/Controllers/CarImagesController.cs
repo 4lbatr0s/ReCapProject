@@ -80,7 +80,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
+        public IActionResult Delete(CarImage  carImage)
         {
             var result = _carImageService.Delete(carImage);
             if(result.Success)

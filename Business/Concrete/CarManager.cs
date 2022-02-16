@@ -40,16 +40,15 @@ namespace Business.Concrete
 
         //[SecuredOperation("admin")]
         //[CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
-        public IResult Delete(Guid carId)
+        public IResult Delete(Car car)
         {
-            var result = _carDal.Get(c => c.CarId == carId);
-            if(result is null)
+            if(car is null)
             {
                 return new ErrorResult(Messages.CarDoesNotExist);
             }
             else
             {
-                _carDal.Delete(result);
+                _carDal.Delete(car);
                 return new SuccessResult(Messages.CarDeleted);
             }
            
@@ -59,7 +58,8 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.AllCarListed);
+            var result = _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(result, Messages.AllCarListed);
         }
 
 

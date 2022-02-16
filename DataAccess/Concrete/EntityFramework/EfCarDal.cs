@@ -20,37 +20,17 @@ namespace DataAccess.Concrete.EntityFramework
                                 join col in context.Colors
                                 on c.ColorId equals col.ColorId
                                 select new CarDetailDto {
-                                    Description = c.Description,
+                                    CarId = c.CarId,
                                     BrandName = b.BrandName,
                                     ColorName = col.ColorName,
-                                    DailyPrice = c.DailyPrice
+                                    DailyPrice = c.DailyPrice,
+                                    Description = c.Description,
+                                    ModelYear = c.ModelYear
                                 };
 
                 return allDetails.ToList(); //return queryable to list.
              }
         }
 
-        public List<CarForGetAllDto> GetCarsDto()
-        {
-            using(ReCapDBContext context = new ReCapDBContext())
-            {
-                var allDetails = from car in context.Cars
-                                 join brand in context.Brands
-                                 on car.BrandId equals brand.BrandId
-                                 join color in context.Colors
-                                 on car.ColorId equals color.ColorId
-                                 select new CarForGetAllDto
-                                 {
-                                     CarId = car.CarId,
-                                     BrandName = brand.BrandName,
-                                     ColorName = color.ColorName,
-                                     DailyPrice = car.DailyPrice,
-                                     Description = car.Description,
-                                     ModelYear = car.ModelYear
-                                 };
-                return allDetails.ToList();
-            }
-            
-        }
     }
 }

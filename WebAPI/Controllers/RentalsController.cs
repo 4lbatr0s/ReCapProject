@@ -33,6 +33,20 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpGet("alldetails")]
+        public IActionResult GetAllDetails()
+        {
+            var result = _rentalService.GetRentalDetails(); //has three values, Data, Success and Message.
+            if (result.Success)
+            {
+                return Ok(result); //status 200
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
         [HttpGet("byid")]
         public IActionResult GetById(Guid rentalId)
         {

@@ -3,7 +3,7 @@ using System;
 
 namespace Entities.Dto
 {
-    public class RentalForGetAllDto:IDto
+    public class RentalDetailDto:IDto
     {
        
         public Guid RentalId { get; set; }

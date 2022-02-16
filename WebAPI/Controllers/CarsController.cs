@@ -88,9 +88,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Guid id) //this car object is actually the client's request
+        public IActionResult Delete(Car car) //this car object is actually the client's request
         {
-            var result = _carService.Delete(id);
+            var result = _carService.Delete(car);
             if (result.Success)
             {
                 return Ok(result);

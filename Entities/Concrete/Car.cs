@@ -13,9 +13,11 @@ namespace Entities
 
         [ForeignKey("Brand")]
         public Guid BrandId { get; set; }
+        public Brand Brand; 
 
         [ForeignKey("Color")]
         public Guid ColorId { get; set; }
+        public Color Color { get; set; }
 
         public int ModelYear { get; set; }
         public decimal DailyPrice { get; set; }

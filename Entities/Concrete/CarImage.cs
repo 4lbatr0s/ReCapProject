@@ -20,6 +20,7 @@ namespace Entities.Concrete
 
         [ForeignKey("Car")]
         public Guid CarId { get; set; }
+        public Car Car { get; set; }
 
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }

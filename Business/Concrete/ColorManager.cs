@@ -29,10 +29,9 @@ namespace Business.Concrete
 
        
 
-        public IResult Delete(Guid id)
+        public IResult Delete(Color color)
         {
-            var result = _colorDal.Get(c => c.ColorId == id);
-            _colorDal.Delete(result);
+            _colorDal.Delete(color);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
