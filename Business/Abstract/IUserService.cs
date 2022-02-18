@@ -3,17 +3,18 @@ using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
     public interface IUserService
     {
-        IDataResult<List<User>> GetAll();
-        IDataResult<User> GetById(Guid userId);
-        IDataResult<User> GetByMail(string mail);
-        IResult Add(User user);
-        IResult Update(User user);
-        IResult Delete(User user);
-        IDataResult<List<OperationClaim>> GetClaims(User user);
+        Task<IDataResult<List<User>>> GetAll();
+        Task<IDataResult<User>> GetById(Guid userId);
+        Task<IDataResult<User>> GetByMail(string mail);
+        Task<IResult> Add(User user);
+        Task<IResult> Update(User user);
+        Task<IResult> Delete(User user);
+        Task<IDataResult<List<OperationClaim>>> GetClaims(User user);
     }
 }

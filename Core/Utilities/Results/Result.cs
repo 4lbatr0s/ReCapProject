@@ -7,7 +7,7 @@ namespace Core.Utilities.Results
 
         public string Message { get;}
 
-        public Result(bool success, string message):this(success) //return success value with the message.
+        public  Result(bool success, string message):this(success) //return success value with the message.
         {
             Message = message;
         }

@@ -1,4 +1,5 @@
-﻿using Core.CrossCuttingConcern.Caching;
+﻿using AutoMapper;
+using Core.CrossCuttingConcern.Caching;
 using Core.CrossCuttingConcern.Caching.Microsoft;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,8 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();//tomorrow by just changing MemoryCacheManager to AnotherCacheManager, we can completely change our caching service.
             serviceCollection.AddSingleton<Stopwatch>();
+            //AutoMapper configuration
+           
         }
     }
 }

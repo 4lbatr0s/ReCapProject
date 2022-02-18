@@ -46,14 +46,14 @@ namespace WebAPI
 
             //AutoMapper configuration
             var mapperConfig = new MapperConfiguration(mc =>
-            {      
+            {
                 mc.AddProfile(new MappingProfile()); //Mapping Profile comes from Business/DependencyResolvers/AutoMapper
             });
             IMapper mapper = mapperConfig.CreateMapper();
 
             services.AddSingleton(mapper);
             services.AddMvc();
-            
+
             //token configuration
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -74,7 +74,7 @@ namespace WebAPI
             //we can create different modules for different goals and thanks to AddDependencyResolvers function
             //we'll be able to configure them here alltogether.
             services.AddDependencyResolvers(new ICoreModule[] {
-                new CoreModule(),
+                new CoreModule()         
             });
 
             services.AddSwaggerGen(c =>

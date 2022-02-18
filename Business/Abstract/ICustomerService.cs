@@ -3,15 +3,16 @@ using Entities.Concrete;
 using Entities.Dto;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
     public interface ICustomerService
     {
-        IDataResult<List<Customer>> GetAll();
-        IDataResult<Customer> GetById(Guid customerId);
-        IResult Add(CustomerCreationDto customer);
-        IResult Update(Customer customer);
-        IResult Delete(Customer customer);
+        Task<IDataResult<List<Customer>>> GetAll();
+        Task<IDataResult<Customer>> GetById(Guid customerId);
+        Task<IResult> Add(CustomerCreationDto customer);
+        Task<IResult> Update(Customer customer);
+        Task<IResult> Delete(Customer customer);
     }
 }

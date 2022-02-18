@@ -28,53 +28,54 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public IResult UploadImage(IFormFile file, CarImageForCreationDto carImageForCreationDto)
+        public async Task<IResult> UploadImage(IFormFile file, CarImageForCreationDto carImageForCreationDto)
         {
             var carImage = _mapper.Map<CarImage>(carImageForCreationDto);
             var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId)
                );
-            if(result!= null)
+            if(result is not null)
             {   
                 return result; //returns the business rule unfittings if there are any.
             } //it will return the error value, no need for a second call.
             carImage.ImagePath = Paths.ImagesPath + _fileHelper.Upload(file, Paths.ImagesPath); //_fileHelper.Upload() returns fileName therefore ImagePath equals (Paths.ImagesPath + fileName)
             carImage.Date = DateTime.Now;
-            _carImageDal.Add(carImage);
+            await _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageIsAdded);
         }
 
 
-        public IDataResult<List<CarImage>> GetAll()
+        public async Task<IDataResult<List<CarImage>>> GetAll()
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.AllCarImagesAreListed);
+            var result = await _carImageDal.GetAll();
+            return new SuccessDataResult<List<CarImage>>(result, Messages.AllCarImagesAreListed);
         }
 
-        public IDataResult<List<CarImage>> GetById(Guid carId)
+        public async Task<IDataResult<List<CarImage>>> GetById(Guid carId)
         {
             var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carId),
                 CheckIfCarImageDoesExists(carId)
                 );
             if(result != null)
             {
-                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
+                return new ErrorDataResult<List<CarImage>>(await GetDefaultImage(carId).Data);
             }
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+            return new SuccessDataResult<List<CarImage>>(await _carImageDal.GetAll(c => c.CarId == carId));
         }
 
-        public IResult Update(IFormFile file, CarImage carImage)
+        public async Task<IResult> Update(IFormFile file, CarImage carImage)
         {
             var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId)
               );
-            if (result != null)
+            if (result is not null)
             {
                 return result; //returns the business rule unfittings if there are any.
             }
             _fileHelper.Update(file, Paths.ImagesPath + carImage.ImagePath, Paths.ImagesPath);
-            _carImageDal.Update(carImage);
+            await _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageIsUpdated);
         }
 
-        public IResult Delete(CarImage carImage)
+        public async Task<IResult> Delete(CarImage carImage)
         {
             var result = BusinessRules.Run(CheckIfCarImageDoesExists(carImage.CarId)
                 );
@@ -82,32 +83,33 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carImage.CarId).Data);
             }
-            _fileHelper.Delete(Paths.ImagesPath + carImage.ImagePath);
-            _carImageDal.Delete(carImage);
+             _fileHelper.Delete(Paths.ImagesPath + carImage.ImagePath);
+            await _carImageDal.Delete(carImage);
              return new SuccessResult(Messages.CarImageIsDeleted);
         }
 
 
-        private IResult CheckIfCarImageNumberIsExceed(Guid carId)
+        private async Task<IResult> CheckIfCarImageNumberIsExceed(Guid carId)
         {
-            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
-            if (result>=5)
+            var result = await _carImageDal.GetAll(c => c.CarId == carId);
+            if (result.Count>=5)
             {
                 return new ErrorResult(Messages.CarImageCountIsExceeded);
             }
             return new SuccessResult(Messages.CarImageIsAdded);
         }
 
-        private IDataResult<List<CarImage>> GetDefaultImage(Guid carId)        {
+        private  IDataResult<List<CarImage>> GetDefaultImage(Guid carId)
+        { 
             List<CarImage> carImages = new List<CarImage>();
             carImages.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "Default.jpg" });
             return new SuccessDataResult<List<CarImage>>();
         }
 
-        private IResult CheckIfCarImageDoesExists(Guid carImageId)
+        private async Task<IResult> CheckIfCarImageDoesExists(Guid carImageId)
         {
-            var result = _carImageDal.Get(c => c.CarImageId == carImageId);
-            if(result == null)
+            var result = await _carImageDal.Get(c => c.CarImageId == carImageId);
+            if(result is null)
             {
                 return new ErrorResult(Messages.CarImageDoesNotExist);
             }

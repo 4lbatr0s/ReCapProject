@@ -3,6 +3,7 @@ using Entities;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -20,7 +21,7 @@ namespace WebAPI.Controllers
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            var result = _carService.GetAll(); //has three values, Data, Success and Message.
+            var result =  _carService.GetAll(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -62,7 +63,7 @@ namespace WebAPI.Controllers
         [HttpGet("bycolorid")]
         public IActionResult GetCarsByColorId(Guid brandId)
         {
-            var result = _carService.GetCarsByColorId(brandId);
+            var result = _carService.GetCarsByColorId(brandId); 
             if (result.Success)
             {
                 return Ok(result);
@@ -72,6 +73,7 @@ namespace WebAPI.Controllers
                 return BadRequest(result.Message);
             }
         }
+
 
         [HttpPost("create")]
         public IActionResult Add(CarForCreationDto carForCreationDto) //this car object is actually the client's request
@@ -116,9 +118,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("details")]
-        public IActionResult GetCarDetails()
+        public async Task<IActionResult> GetCarDetails()
         {
-            var result = _carService.GetCarDetails();
+            var result = await _carService.GetCarDetails();
             if (result.Success)
             {
                 return Ok(result);

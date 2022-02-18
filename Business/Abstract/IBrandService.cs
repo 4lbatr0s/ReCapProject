@@ -3,16 +3,17 @@ using Entities;
 using Entities.Dto;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
     public interface IBrandService
     {
-        IDataResult<List<Brand>> GetAll();
-        IDataResult<Brand> GetById(Guid BrandId);
-        IDataResult<List<Brand>> GetByCountry(string countrName);
-        IResult Add(BrandForCreationDto brandForCreationDto);
-        IResult Delete(Brand Brand);
-        IResult Update(Brand Brand);
+        Task<IDataResult<List<Brand>>> GetAll();
+        Task<IDataResult<Brand>> GetById(Guid BrandId);
+        Task<IDataResult<List<Brand>>> GetByCountry(string countrName);
+        Task<IResult> Add(BrandForCreationDto brandForCreationDto);
+        Task<IResult> Delete(Brand Brand);
+        Task<IResult> Update(Brand Brand);
     }
 }

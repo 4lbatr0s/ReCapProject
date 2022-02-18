@@ -3,17 +3,18 @@ using Entities;
 using Entities.Dto;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
     public interface IColorService
     {
-        IDataResult<List<Color>> GetAll();
-        IDataResult<Color> GetById(Guid ColorId);
-        IResult Add(ColorForCreationDto Color);
-        IResult Delete(Color color);
-        IResult Update(Color Color);
-        IDataResult<List<Color>> GetByColorName(string name);
+        Task<IDataResult<List<Color>>> GetAll();
+        Task<IDataResult<Color>> GetById(Guid ColorId);
+        Task<IResult> Add(ColorForCreationDto Color);
+        Task<IResult> Delete(Color color);
+        Task<IResult> Update(Color Color);
+        Task<IDataResult<List<Color>>> GetByColorName(string name);
         
     }
 }

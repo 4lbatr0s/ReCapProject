@@ -31,16 +31,16 @@ namespace Business.Concrete
         //[SecuredOperation("admin")]
         //[ValidationAspect (typeof(CarValidator))] //throw exception if request body does not fill the requirements.
         //[CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
-        public IResult Add(CarForCreationDto carForCreationDto)
+        public async Task<IResult> Add(CarForCreationDto carForCreationDto)
         {
             var car = _mapper.Map<Car>(carForCreationDto);
-            _carDal.Add(car);
+            await _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
 
         //[SecuredOperation("admin")]
         //[CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
-        public IResult Delete(Car car)
+        public async Task<IResult> Delete(Car car)
         {
             if(car is null)
             {
@@ -48,7 +48,7 @@ namespace Business.Concrete
             }
             else
             {
-                _carDal.Delete(car);
+                await _carDal.Delete(car);
                 return new SuccessResult(Messages.CarDeleted);
             }
            
@@ -56,40 +56,40 @@ namespace Business.Concrete
 
 
         [CacheAspect]
-        public IDataResult<List<Car>> GetAll()
+        public async Task<IDataResult<List<Car>>> GetAll()
         {
-            var result = _carDal.GetAll();
+            var result = await _carDal.GetAll();
             return new SuccessDataResult<List<Car>>(result, Messages.AllCarListed);
         }
 
 
-        public IDataResult<Car> GetById(Guid carId)
+        public async Task<IDataResult<Car>> GetById(Guid carId)
         {
             //here, we create our filters to send EfCarDal functions, hence to the IEntityRepository Generic Repository Pattern.
-            return new SuccessDataResult<Car>(_carDal.Get(p => p.CarId == carId));
+            return new SuccessDataResult<Car>(await _carDal.Get(p => p.CarId == carId));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        public async Task<IDataResult<List<CarDetailDto>>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarDetails);
+            return new SuccessDataResult<List<CarDetailDto>>(await _carDal.GetCarDetails(), Messages.CarDetails);
         }
 
-        public IDataResult<List<Car>> GetCarsByBrandId(Guid brandId)
+        public async Task<IDataResult<List<Car>>> GetCarsByBrandId(Guid brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
+            return new SuccessDataResult<List<Car>>(await _carDal.GetAll(c => c.BrandId == brandId));
         }
 
-        public IDataResult<List<Car>> GetCarsByColorId(Guid colorId)
+        public async Task<IDataResult<List<Car>>> GetCarsByColorId(Guid colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
+            return new SuccessDataResult<List<Car>>(await _carDal.GetAll(c => c.ColorId == colorId));
         }
 
 
         [SecuredOperation("admin")]
         [CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
-        public IResult Update(Car car)
+        public async Task<IResult> Update(Car car)
         {
-            _carDal.Update(car);
+            await _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
 

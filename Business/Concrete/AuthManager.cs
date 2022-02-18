@@ -25,7 +25,7 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
+        public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt; //Core/Utilities/Encryption/Hashing/HashingHelper.CreatePassword
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -38,14 +38,14 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true //active user.
             };
-            _userService.Add(user); //add user to the database.
+            await _userService.Add(user); //add user to the database.
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
-        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
+        public async  Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
 
-            var userToCheck = _userService.GetByMail(userForLoginDto.Email); //fetch user by email.
+            var userToCheck = await _userService.GetByMail(userForLoginDto.Email); //fetch user by email.
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
@@ -59,20 +59,21 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(userToCheck.Data, Messages.SuccessfulLogin);
         }
 
-        public IResult UserExists(string email)
+        public async Task<IResult> UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            var result = await _userService.GetByMail(email);
+            if (result is not null)
             {
-                return new SuccessResult();
+                return  new SuccessResult();
             }
-            return new ErrorResult(Messages.UserAlreadyExists);
+            return  new ErrorResult(Messages.UserAlreadyExists);
         }
 
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
-        {
-            var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims.Data);
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
+        {   
+            var claims = await _userService.GetClaims(user);
+            var accessToken =  _tokenHelper.CreateToken(user, claims.Data);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
  

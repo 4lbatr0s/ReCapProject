@@ -7,6 +7,7 @@ using Core.Utilities.Results;
 using Business.Constants;
 using AutoMapper;
 using Entities.Dto;
+using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -21,37 +22,42 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public IResult Add(BrandForCreationDto brandForCreationDto)
+        public async Task<IResult> Add(BrandForCreationDto brandForCreationDto)
         {       //Destination:Brand, Source:brandForCreationDto
             var brand = _mapper.Map<Brand>(brandForCreationDto); 
-            _brandDal.Add(brand);
+            await _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public IResult Delete(Brand brand)
+        public async Task<IResult> Delete(Brand brand)
         {
-            _brandDal.Delete(brand);
+            await _brandDal.Delete(brand);
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public IDataResult<List<Brand>> GetAll()
+        public async Task<IDataResult<List<Brand>>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.AllBrandsListed);
+            var result = await _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(result, Messages.AllBrandsListed);
         }
 
-        public IDataResult<List<Brand>> GetByCountry(string countrName)
+        public async Task<IDataResult<List<Brand>>> GetByCountry(string countrName)
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(c => c.BrandCountry == countrName));
+            var result = await _brandDal.GetAll(c => c.BrandCountry == countrName));
+            return new SuccessDataResult<List<Brand>>(result);
         }
 
-        public IDataResult<Brand> GetById(Guid BrandId)
+        public async Task<IDataResult<Brand>> GetById(Guid BrandId)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(brand => brand.BrandId == BrandId));
+            var result = await _brandDal.Get(brand => brand.BrandId == BrandId);
+            return new SuccessDataResult<Brand>(result);
         }
 
-        public IResult Update(Brand Brand)
+
+
+        public async Task<IResult> Update(Brand Brand)
         {    
-            _brandDal.Update(Brand);
+            await _brandDal.Update(Brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
     }

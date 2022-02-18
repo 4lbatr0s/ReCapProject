@@ -17,12 +17,10 @@ namespace Entities.Concrete
         
         [ForeignKey("Car")]
         public Guid CarId { get; set; }
-        public Car Car { get; set; }
 
 
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
-        public Customer Customer { get; set; }
 
         public DateTime RentDate { get; set; }
         public DateTime? ReturnDate { get; set; }

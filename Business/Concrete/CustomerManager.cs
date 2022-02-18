@@ -24,34 +24,34 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public IResult Add(CustomerCreationDto customerCreationDto)
+        public async Task<IResult> Add(CustomerCreationDto customerCreationDto)
         {
             var customer = _mapper.Map<Customer>(customerCreationDto);
-            _customerDal.Add(customer);
+            await _customerDal.Add(customer);
             return new SuccessResult(Messages.CustomerAdded);
         }
 
         
 
-        public IResult Delete(Customer result)
+        public async Task<IResult> Delete(Customer result)
         {
-            _customerDal.Delete(result);
+            await _customerDal.Delete(result);
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
-        public IDataResult<List<Customer>> GetAll()
+        public async Task<IDataResult<List<Customer>>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.AllCustomersListed);
+            return new SuccessDataResult<List<Customer>>(await _customerDal.GetAll(), Messages.AllCustomersListed);
         }
 
-        public IDataResult<Customer> GetById(Guid customerId)
+        public async Task<IDataResult<Customer>> GetById(Guid customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
+            return new SuccessDataResult<Customer>(await _customerDal.Get(c => c.CustomerId == customerId));
         }
 
-        public IResult Update(Customer customer)
+        public  async Task<IResult> Update(Customer customer)
         {
-            _customerDal.Update(customer);
+            await _customerDal.Update(customer);
             return new SuccessResult(Messages.CustomerUpdated);
         }
     }

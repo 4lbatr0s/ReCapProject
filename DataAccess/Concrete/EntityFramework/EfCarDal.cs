@@ -2,14 +2,16 @@
 using DataAccess.Abstract;
 using Entities;
 using Entities.Dto;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal:EfEntityRepositoryBase<Car, ReCapDBContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public async Task<List<CarDetailDto>> GetCarDetails()
         {
            
              using(ReCapDBContext context = new ReCapDBContext())
@@ -28,7 +30,7 @@ namespace DataAccess.Concrete.EntityFramework
                                     ModelYear = c.ModelYear
                                 };
 
-                return allDetails.ToList(); //return queryable to list.
+                return await allDetails.ToListAsync(); //return queryable to list.
              }
         }
 

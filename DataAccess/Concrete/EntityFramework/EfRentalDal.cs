@@ -2,15 +2,16 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapDBContext>, IRentalDal
     {
-        public List<RentalDetailDto> GetRentalDetails()
+        public async Task<List<RentalDetailDto>> GetRentalDetails()
         {
             using (ReCapDBContext context = new ReCapDBContext())
             {
@@ -32,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
                                      ReturnDate = r.ReturnDate
                                  };
 
-                return allDetails.ToList();
+                return await allDetails.ToListAsync();
             }
         }
     }

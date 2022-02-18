@@ -13,53 +13,53 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext, new()   
     {
-        public void Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {
             using(TContext context = new TContext())
             {
-                var addedEntity = context.Entry(entity); //set the reference address.
+                var addedEntity =   context.Entry(entity); //set the reference address.
                 addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
             }
         }
 
-        public void Delete(TEntity entity)
+        public async Task Delete(TEntity entity)
         {
             using(TContext context = new TContext())
             {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
              
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
             using(TContext context = new TContext())
             {
-                return context.Set<TEntity>().SingleOrDefault(filter); //set the entity on the address, then bring it.
+                return await context.Set<TEntity>().SingleOrDefaultAsync(filter); //set the entity on the address, then bring it.
             }
         }
 
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        public async Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using(TContext context = new TContext())
             {
                 return filter == null   //SETTLE ON THE TContext table then bring all or just filtered values.
-                    ? context.Set<TEntity>().ToList() 
-                    : context.Set<TEntity>().Where(filter).ToList();
+                    ? await context.Set<TEntity>().ToListAsync() 
+                    : await context .Set<TEntity>().Where(filter).ToListAsync();
             }
         }
 
-        public void Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
             using(TContext context = new TContext())
             {
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

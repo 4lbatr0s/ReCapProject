@@ -12,7 +12,7 @@ namespace Business.BusinessAspects.Autofac
     public class SecuredOperation : MethodInterception
     {
         private string[] _roles;
-        private IHttpContextAccessor _httpContextAccessor; // In API, foreach person that sent a request, we create a HTTPContext
+        private readonly IHttpContextAccessor _httpContextAccessor; // In API, foreach person that sent a request, we create a HTTPContext
 
         public SecuredOperation(string roles)
         {

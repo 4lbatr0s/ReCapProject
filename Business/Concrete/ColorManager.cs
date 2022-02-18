@@ -7,6 +7,7 @@ using Business.Constants;
 using System;
 using Entities.Dto;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -20,44 +21,44 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public IResult Add(ColorForCreationDto colorForCreationDto)
+        public async Task<IResult> Add(ColorForCreationDto colorForCreationDto)
         {
             var color = _mapper.Map<Color>(colorForCreationDto);
-            _colorDal.Add(color);
+            await _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
         }
 
        
 
-        public IResult Delete(Color color)
+        public async Task<IResult> Delete(Color color)
         {
-            _colorDal.Delete(color);
+            await _colorDal.Delete(color);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
     
 
-        public IDataResult<List<Color>> GetAll()
+        public async Task<IDataResult<List<Color>>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.AllColorListed);
+            return new SuccessDataResult<List<Color>>(await _colorDal.GetAll(), Messages.AllColorListed);
             
         }
 
-        public IDataResult<List<Color>> GetByColorName(string name)
+        public async Task<IDataResult<List<Color>>>  GetByColorName(string name)
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorName == name));
+            return new SuccessDataResult<List<Color>>(await _colorDal.GetAll(c => c.ColorName == name));
         }
 
-        public IDataResult<Color> GetById(Guid ColorId)
+        public async Task<IDataResult<Color>> GetById(Guid ColorId)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(Color => Color.ColorId == ColorId));
+            return new SuccessDataResult<Color>(await _colorDal.Get(Color => Color.ColorId == ColorId));
         }
 
         
 
-        public IResult Update(Color Color)
+        public async Task<IResult> Update(Color Color)
         {
-            _colorDal.Update(Color);
+            await _colorDal.Update(Color);
             return new SuccessResult(Messages.ColorUpdated);
         }
     }

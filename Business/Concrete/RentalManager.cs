@@ -7,6 +7,7 @@ using Entities.Concrete;
 using Entities.Dto;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -19,37 +20,38 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
             _mapper = mapper;
         }
-        public IResult Add(RentalForCreationDto rentalForCreationDto)
+        public async Task<IResult> Add(RentalForCreationDto rentalForCreationDto)
         {
             var rental = _mapper.Map<Rental>(rentalForCreationDto);
-            _rentalDal.Add(rental);
+            await _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
 
-        public IResult Delete(Rental rental)
+        public async Task<IResult> Delete(Rental rental)
         {
-            _rentalDal.Delete(rental);
+            await _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public IDataResult<List<Rental>> GetAll()
+        public async Task<IDataResult<List<Rental>>> GetAll()
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.AllRentalsListed);
+            return new SuccessDataResult<List<Rental>>(await _rentalDal.GetAll(), Messages.AllRentalsListed);
         }
 
-        public IDataResult<Rental> GetById(Guid rentalId)
+        public async Task<IDataResult<Rental>> GetById(Guid rentalId)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId));
+            return new SuccessDataResult<Rental>(await _rentalDal.Get(r => r.RentalId == rentalId));
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        public async Task<IDataResult<List<RentalDetailDto>>> GetRentalDetails()
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
+            var result = await _rentalDal.GetRentalDetails();
+            return new SuccessDataResult<List<RentalDetailDto>>();
         }
 
-        public IResult Update(Rental rental)
+        public async Task<IResult> Update(Rental rental)
         {
-            _rentalDal.Update(rental);
+            await _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
     }
