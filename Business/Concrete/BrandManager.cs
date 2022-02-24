@@ -43,7 +43,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Brand>>> GetByCountry(string countrName)
         {
-            var result = await _brandDal.GetAll(c => c.BrandCountry == countrName));
+            var result = await _brandDal.GetAll(c => c.BrandCountry == countrName);
             return new SuccessDataResult<List<Brand>>(result);
         }
 

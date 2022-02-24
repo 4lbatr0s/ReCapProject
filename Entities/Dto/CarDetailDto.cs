@@ -11,6 +11,8 @@ namespace Entities.Dto
 
         public string BrandName { get; set; }
 
+        public string ImagePath { get; set; }
+
         public string ColorName { get; set; }
 
         public int ModelYear { get; set; }

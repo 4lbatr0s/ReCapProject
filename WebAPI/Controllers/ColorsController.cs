@@ -3,6 +3,7 @@ using Entities;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -19,9 +20,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _colorService.GetAll();
+            var result = await _colorService.GetAll();
             if(result.Success)
             {
                 return Ok(result);
@@ -33,9 +34,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(int colorId)
+        public async Task<IActionResult> GetById(int colorId)
         {
-            var result = _colorService.GetAll();
+            var result = await _colorService.GetAll();
             if(result.Success)
             {
                 return Ok(result);
@@ -47,9 +48,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Add(ColorForCreationDto colorForCreationDto)
+        public async Task<IActionResult> Add(ColorForCreationDto colorForCreationDto)
         {
-            var result = _colorService.Add(colorForCreationDto);
+            var result = await _colorService.Add(colorForCreationDto);
             if(result.Success)
             {
                 return Ok(result);
@@ -61,10 +62,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Color color)
+        public async Task<IActionResult> Delete(Color color)
         {
-            var result = _colorService.Delete(color);
-            if(result.Success)
+            var result = await _colorService.Delete(color);
+            if (result.Success)
             {
                 return Ok(result);
             }
@@ -75,9 +76,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Color color)
+        public async Task<IActionResult>Update(Color color)
         {
-            var result = _colorService.Update(color);
+            var result = await _colorService.Update(color);
             if(result.Success)
             {
                 return Ok(result);

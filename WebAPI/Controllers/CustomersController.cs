@@ -5,6 +5,7 @@ using Entities.Concrete;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -21,9 +22,9 @@ namespace WebAPI.Controllers
 
          
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _customerService.GetAll(); //has three values, Data, Success and Message.
+            var result = await _customerService.GetAll(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -35,9 +36,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(Guid customerId)
+        public async Task<IActionResult> GetById(Guid customerId)
         {
-            var result = _customerService.GetById(customerId);
+            var result = await _customerService.GetById(customerId);
             if (result.Success)
             {
                 return Ok(result);
@@ -50,10 +51,10 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult Add(CustomerCreationDto customerCreationDto) //this Customer object is actually the client's request
+        public async Task<IActionResult> Add(CustomerCreationDto customerCreationDto) //this Customer object is actually the client's request
         {
 
-            var result = _customerService.Add(customerCreationDto);
+            var result =  await _customerService.Add(customerCreationDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -65,9 +66,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Customer customer) //this car object is actually the client's request
+        public async Task<IActionResult> Delete(Customer customer) //this car object is actually the client's request
         {
-            var result = _customerService.Delete(customer);
+            var result = await _customerService.Delete(customer);
             if (result.Success)
             {
                 return Ok(result);
@@ -79,9 +80,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Customer customer) //this car object is actually the client's request
+        public async Task<IActionResult> Update(Customer customer) //this car object is actually the client's request
         {
-            var result = _customerService.Update(customer);
+            var result = await _customerService.Update(customer);
             if (result.Success)
             {
                 return Ok(result);

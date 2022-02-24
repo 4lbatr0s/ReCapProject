@@ -4,6 +4,7 @@ using Entities.Concrete;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -20,9 +21,9 @@ namespace WebAPI.Controllers
 
          
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _rentalService.GetAll(); //has three values, Data, Success and Message.
+            var result = await _rentalService.GetAll(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -34,9 +35,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("alldetails")]
-        public IActionResult GetAllDetails()
+        public async Task<IActionResult> GetAllDetails()
         {
-            var result = _rentalService.GetRentalDetails(); //has three values, Data, Success and Message.
+            var result = await _rentalService.GetRentalDetails(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -48,9 +49,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(Guid rentalId)
+        public async Task<IActionResult> GetById(Guid rentalId)
         {
-            var result = _rentalService.GetById(rentalId);
+            var result = await _rentalService.GetById(rentalId);
             if (result.Success)
             {
                 return Ok(result);
@@ -59,13 +60,13 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-        }
+        } 
 
 
         [HttpPost("create")]
-        public IActionResult Add(RentalForCreationDto rentalForCreationDto) //this rental object is actually the client's request
+        public async Task<IActionResult> Add(RentalForCreationDto rentalForCreationDto)
         {
-            var result = _rentalService.Add(rentalForCreationDto);
+            var result = await _rentalService.Add(rentalForCreationDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -77,9 +78,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Rental rental) //this car object is actually the client's request
+        public async Task<IActionResult> Delete(Rental rental) //this car object is actually the client's request
         {
-            var result = _rentalService.Delete(rental);
+            var result = await _rentalService.Delete(rental);
             if (result.Success)
             {
                 return Ok(result);
@@ -91,9 +92,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Rental rental) //this car object is actually the client's request
+        public async Task<IActionResult> Update(Rental rental)
         {
-            var result = _rentalService.Update(rental);
+            var result = await _rentalService.Update(rental);
             if (result.Success)
             {
                 return Ok(result);

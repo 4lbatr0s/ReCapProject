@@ -21,13 +21,16 @@ namespace DataAccess.Concrete.EntityFramework
                                 on c.BrandId equals b.BrandId
                                 join col in context.Colors
                                 on c.ColorId equals col.ColorId
+                                join Imp in context.CarImages
+                                on c.CarId equals Imp.CarId
                                 select new CarDetailDto {
                                     CarId = c.CarId,
                                     BrandName = b.BrandName,
                                     ColorName = col.ColorName,
                                     DailyPrice = c.DailyPrice,
                                     Description = c.Description,
-                                    ModelYear = c.ModelYear
+                                    ModelYear = c.ModelYear,
+                                    ImagePath = Imp.ImagePath
                                 };
 
                 return await allDetails.ToListAsync(); //return queryable to list.

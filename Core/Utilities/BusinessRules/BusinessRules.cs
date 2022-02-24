@@ -13,7 +13,7 @@ namespace Core.Utilities.BusinessRules
         {
             foreach (var logic in logics)
             {
-                if(!logic.Success) //herhangi biri error getiriyorsa 
+              if(!logic.Success) //herhangi biri error getiriyorsa 
                 {
                     return logic; //o hatayı dön..
                 }

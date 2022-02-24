@@ -19,9 +19,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result =  _carService.GetAll(); //has three values, Data, Success and Message.
+            var result =  await _carService.GetAll(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -33,9 +33,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(Guid carId)
+        public async Task<IActionResult> GetById(Guid carId)
         {
-            var result = _carService.GetById(carId);
+            var result = await _carService.GetById(carId);
             if (result.Success)
             {
                 return Ok(result);
@@ -47,9 +47,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("bybrandid")]
-        public IActionResult GetCarsByBrandId(Guid brandId)
+        public async Task<IActionResult> GetCarsByBrandId(Guid brandId)
         {
-            var result = _carService.GetCarsByBrandId(brandId);
+            var result = await _carService.GetCarsByBrandId(brandId);
             if (result.Success)
             {
                 return Ok(result);
@@ -61,9 +61,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("bycolorid")]
-        public IActionResult GetCarsByColorId(Guid brandId)
+        public async Task<IActionResult> GetCarsByColorId(Guid brandId)
         {
-            var result = _carService.GetCarsByColorId(brandId); 
+            var result = await _carService.GetCarsByColorId(brandId); 
             if (result.Success)
             {
                 return Ok(result);
@@ -76,9 +76,9 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult Add(CarForCreationDto carForCreationDto) //this car object is actually the client's request
+        public async Task<IActionResult> Add(CarForCreationDto carForCreationDto) //this car object is actually the client's request
         {
-            var result = _carService.Add(carForCreationDto);
+            var result = await _carService.Add(carForCreationDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -90,9 +90,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Car car) //this car object is actually the client's request
+        public async Task<IActionResult> Delete(Car car)
         {
-            var result = _carService.Delete(car);
+            var result = await _carService.Delete(car);
             if (result.Success)
             {
                 return Ok(result);
@@ -104,9 +104,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Car car) //this car object is actually the client's request
+        public async Task<IActionResult> Update(Car car)
         {
-            var result = _carService.Update(car);
+            var result = await _carService.Update(car);
             if (result.Success)
             {
                 return Ok(result);

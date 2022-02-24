@@ -3,6 +3,7 @@ using Entities;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -17,9 +18,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async  Task<IActionResult> GetAll()
         {
-            var result = _brandService.GetAll(); //has three values, Data, Success and Message.
+            var result = await _brandService.GetAll(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -31,9 +32,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(Guid carId)
+        public async Task<IActionResult> GetById(Guid carId)
         {
-            var result = _brandService.GetById(carId);
+            var result = await _brandService.GetById(carId);
             if (result.Success)
             {
                 return Ok(result);
@@ -47,9 +48,9 @@ namespace WebAPI.Controllers
        
 
         [HttpGet("bycountry")]
-        public IActionResult GetCarsByBrandId(string countryName)
+        public async Task<IActionResult> GetCarsByBrandId(string countryName)
         {
-            var result = _brandService.GetByCountry(countryName);
+            var result =  await _brandService.GetByCountry(countryName);
             if (result.Success)
             {
                 return Ok(result);
@@ -62,9 +63,9 @@ namespace WebAPI.Controllers
  
 
         [HttpPost("create")]
-        public IActionResult Add(BrandForCreationDto brand) //this car object is actually the client's request
+        public async Task<IActionResult> Add(BrandForCreationDto brand) //this car object is actually the client's request
         {
-            var result = _brandService.Add(brand);
+            var result = await _brandService.Add(brand);
             if (result.Success)
             {
                 return Ok(result);
@@ -76,9 +77,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Brand brand) //this car object is actually the client's request
+        public async Task<IActionResult> Delete(Brand brand)
         {
-            var result = _brandService.Delete(brand);
+            var result = await _brandService.Delete(brand);
             if (result.Success)
             {
                 return Ok(result);
@@ -90,9 +91,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Brand brand) //this car object is actually the client's request
+        public async Task<IActionResult> Update(Brand brand)
         {
-            var result = _brandService.Update(brand);
+            var result = await _brandService.Update(brand);
             if (result.Success)
             {
                 return Ok(result);
@@ -101,7 +102,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-        }
+        } 
 
     
     }

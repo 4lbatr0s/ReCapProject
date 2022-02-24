@@ -21,15 +21,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(UserForLoginDto userForLoginDto)
+        public async Task<IActionResult>  Login(UserForLoginDto userForLoginDto)
         {
-            var userToLogin = _authService.Login(userForLoginDto);
+            var userToLogin = await _authService.Login(userForLoginDto);
             if(!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
             }
 
-            var result = _authService.CreateAccessToken(userToLogin.Data);
+            var result = await _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -43,16 +43,16 @@ namespace WebAPI.Controllers
 
         [HttpPost("register")]
 
-        public IActionResult Register(UserForRegisterDto userForRegisterDto)
+        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var userExist = _authService.UserExists(userForRegisterDto.Email);
+            var userExist = await _authService.UserExists(userForRegisterDto.Email);
             if (!userExist.Success)
             {
                 return BadRequest(userExist.Message);
             }
 
-            var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);//returns a User if succeed
-            var result= _authService.CreateAccessToken(registerResult.Data);
+            var registerResult = await _authService.Register(userForRegisterDto, userForRegisterDto.Password);//returns a User if succeed
+            var result= await _authService.CreateAccessToken(registerResult.Data);
             if (result.Success)
             {
                 return Ok(result.Data);

@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B57A5B9F-D5A5-4717-8BF7-74F97E3C2CB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{06F495E5-158E-4899-90C2-BA2FBFBD8C7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD583A2E-3BD0-4571-A393-6E1A7BCB0A4C} = {CD583A2E-3BD0-4571-A393-6E1A7BCB0A4C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{CA11D167-CD81-4E42-A087-EAD4BA8346D8}"
 EndProject

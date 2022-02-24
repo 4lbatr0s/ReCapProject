@@ -3,6 +3,7 @@ using Entities;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -19,9 +20,9 @@ namespace WebAPI.Controllers
 
          
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _userService.GetAll(); //has three values, Data, Success and Message.
+            var result =await _userService.GetAll(); //has three values, Data, Success and Message.
             if (result.Success)
             {
                 return Ok(result); //status 200
@@ -33,9 +34,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byemail")]
-        public IActionResult GetById(string email)
+        public async Task<IActionResult> GetById(string email)
         {
-            var result = _userService.GetByMail(email);
+            var result = await _userService.GetByMail(email);
             if (result.Success)
             {
                 return Ok(result);
@@ -47,9 +48,9 @@ namespace WebAPI.Controllers
             }
         }
         [HttpGet("byid")]
-        public IActionResult GetById(Guid userId)
+        public async Task<IActionResult> GetById(Guid userId)
         {
-            var result = _userService.GetById(userId);
+            var result = await _userService.GetById(userId);
             if (result.Success)
             {
                 return Ok(result);
@@ -62,9 +63,9 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult Add(User user) //this user object is actually the client's request
+        public async Task<IActionResult> Add(User user) //this user object is actually the client's request
         {
-            var result = _userService.Add(user);
+            var result = await _userService.Add(user);
             if (result.Success)
             {
                 return Ok(result);
@@ -76,9 +77,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(User user ) //this car object is actually the client's request
+        public async Task<IActionResult> Delete(User user)
         {
-            var result = _userService.Delete(user);
+            var result = await _userService.Delete(user);
             if (result.Success)
             {
                 return Ok(result);
@@ -90,9 +91,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(User user) //this car object is actually the client's request
+        public async Task<IActionResult> Update(User user) //this car object is actually the client's request
         {
-            var result = _userService.Update(user);
+            var result = await _userService.Update(user);
             if (result.Success)
             {
                 return Ok(result);

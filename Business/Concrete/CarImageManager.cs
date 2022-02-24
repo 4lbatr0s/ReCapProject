@@ -31,7 +31,7 @@ namespace Business.Concrete
         public async Task<IResult> UploadImage(IFormFile file, CarImageForCreationDto carImageForCreationDto)
         {
             var carImage = _mapper.Map<CarImage>(carImageForCreationDto);
-            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId)
+            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId).Result
                );
             if(result is not null)
             {   
@@ -52,19 +52,19 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<CarImage>>> GetById(Guid carId)
         {
-            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carId),
-                CheckIfCarImageDoesExists(carId)
+            var result =  BusinessRules.Run(CheckIfCarImageNumberIsExceed(carId).Result,
+                CheckIfCarImageDoesExists(carId).Result
                 );
             if(result != null)
             {
-                return new ErrorDataResult<List<CarImage>>(await GetDefaultImage(carId).Data);
+                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Result.Data);
             }
             return new SuccessDataResult<List<CarImage>>(await _carImageDal.GetAll(c => c.CarId == carId));
         }
 
         public async Task<IResult> Update(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId)
+            var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId).Result
               );
             if (result is not null)
             {
@@ -77,11 +77,11 @@ namespace Business.Concrete
 
         public async Task<IResult> Delete(CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckIfCarImageDoesExists(carImage.CarId)
+            var result = BusinessRules.Run(CheckIfCarImageDoesExists(carImage.CarId).Result
                 );
             if (result != null)
             {
-                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carImage.CarId).Data);
+                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carImage.CarId).Result.Data);
             }
              _fileHelper.Delete(Paths.ImagesPath + carImage.ImagePath);
             await _carImageDal.Delete(carImage);
@@ -99,10 +99,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageIsAdded);
         }
 
-        private  IDataResult<List<CarImage>> GetDefaultImage(Guid carId)
+        private async Task<IDataResult<List<CarImage>>> GetDefaultImage(Guid carId)
         { 
             List<CarImage> carImages = new List<CarImage>();
             carImages.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "Default.jpg" });
+            await Task.Delay(1000);
             return new SuccessDataResult<List<CarImage>>();
         }
 

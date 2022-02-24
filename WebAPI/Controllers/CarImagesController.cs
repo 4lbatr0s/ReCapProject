@@ -24,9 +24,9 @@ namespace WebAPI.Controllers
 
        
         [HttpPost("upload")]
-        public IActionResult UploadImage([FromForm] IFormFile file, [FromForm] CarImageForCreationDto carImage)
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] CarImageForCreationDto carImage)
         {
-            var result = _carImageService.UploadImage(file, carImage);
+            var result =  await _carImageService.UploadImage(file, carImage);
             if(result.Success)
             {
                 return Ok(result);
@@ -38,9 +38,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var result = _carImageService.GetAll();
+            var result = await _carImageService.GetAll();
             if(result.Success)
             {
                 return Ok(result);
@@ -52,9 +52,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetById(Guid carImageId)
+        public async Task<IActionResult> GetById(Guid carImageId)
         {
-            var result = _carImageService.GetById(carImageId);
+            var result = await _carImageService.GetById(carImageId);
             if (result.Success)
             {
                 return Ok(result);
@@ -66,9 +66,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm] IFormFile file, [FromForm] CarImage carImage)
+        public async Task<IActionResult> Update([FromForm] IFormFile file, [FromForm] CarImage carImage)
         {
-            var result = _carImageService.Update(file, carImage);
+            var result = await _carImageService.Update(file, carImage);
             if(result.Success)
             {
                 return Ok(result);
@@ -80,9 +80,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(CarImage  carImage)
+        public async Task<IActionResult> Delete(CarImage  carImage)
         {
-            var result = _carImageService.Delete(carImage);
+            var result = await _carImageService.Delete(carImage);
             if(result.Success)
             {
                 return Ok(result.Message);
