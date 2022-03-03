@@ -121,6 +121,54 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetCarDetails()
         {
             var result = await _carService.GetCarDetails();
+            
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
+
+        [HttpGet("detailsbycolorid")]
+        public async Task<IActionResult> GetCarDetailsByColorId(Guid colorId)
+        {
+            var result = await _carService.GetCarDetailsByColorId(colorId);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
+        [HttpGet("detailsbybrandid")]
+        public async Task<IActionResult> GetCarDetailsByBrandId(Guid brandId)
+        {
+            var result = await _carService.GetCarDetailsByBrandId(brandId);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
+
+        [HttpGet("detailsbyid")]
+        public async Task<IActionResult> GetCarDetailsById(Guid carId)
+        {
+            var result = await _carService.GetCarDetailsById(carId);
+
             if (result.Success)
             {
                 return Ok(result);

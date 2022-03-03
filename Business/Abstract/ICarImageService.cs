@@ -12,7 +12,7 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        Task<IResult> UploadImage(IFormFile file, CarImageForCreationDto carImage);
+        Task<IResult> UploadImage(IFormFile file, Guid carId);
         Task<IDataResult<List<CarImage>>> GetAll();
         Task<IDataResult<List<CarImage>>> GetById(Guid carImageId);
 

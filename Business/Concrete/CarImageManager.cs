@@ -28,8 +28,12 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public async Task<IResult> UploadImage(IFormFile file, CarImageForCreationDto carImageForCreationDto)
+        public async Task<IResult> UploadImage(IFormFile file, Guid carId)
         {
+            var carImageForCreationDto = new CarImageForCreationDto
+            {
+                CarId = carId
+            };
             var carImage = _mapper.Map<CarImage>(carImageForCreationDto);
             var result = BusinessRules.Run(CheckIfCarImageNumberIsExceed(carImage.CarId).Result
                );

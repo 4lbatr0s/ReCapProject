@@ -13,7 +13,7 @@ namespace Entities
 
         [ForeignKey("Brand")]
         public Guid BrandId { get; set; }
-
+            
         [ForeignKey("Color")]
         public Guid ColorId { get; set; }
 

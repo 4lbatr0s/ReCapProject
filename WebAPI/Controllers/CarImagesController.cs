@@ -15,18 +15,25 @@ namespace WebAPI.Controllers
     public class CarImagesController : ControllerBase
     {
         private readonly ICarImageService _carImageService;
+        private readonly ICarService _carService;
         //private readonly 
 
-        public CarImagesController(ICarImageService carImageService)
+        public CarImagesController(ICarImageService carImageService, ICarService carService)
         {
             _carImageService = carImageService;
+            _carService = carService;
         }
 
-       
+
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] CarImageForCreationDto carImage)
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] Guid carId)
         {
-            var result =  await _carImageService.UploadImage(file, carImage);
+            var car = _carService.GetById(carId).Result;
+            var carImageDto = new CarImageForCreationDto
+            {
+                CarId = carId
+            };
+            var result =  await _carImageService.UploadImage(file, carImageDto.CarId);
             if(result.Success)
             {
                 return Ok(result);

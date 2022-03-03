@@ -71,13 +71,39 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<CarDetailDto>>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(await _carDal.GetCarDetails(), Messages.CarDetails);
+            var result = await _carDal.GetCarDetails();
+          
+            return new SuccessDataResult<List<CarDetailDto>>(result, Messages.CarDetails);
+        }
+
+        public async Task<IDataResult<List<CarDetailDto>>> GetCarDetailsByColorId(Guid colorId)
+        {
+            var result  = await _carDal.GetCarDetails(c => c.ColorId == colorId);
+
+            return new SuccessDataResult<List<CarDetailDto>>(result, Messages.CarDetails);
+        }
+
+        public async Task<IDataResult<List<CarDetailDto>>> GetCarDetailsByBrandId(Guid brandId)
+        {
+            var result = await _carDal.GetCarDetails(c => c.BrandId == brandId);
+
+            return new SuccessDataResult<List<CarDetailDto>>(result, Messages.CarDetails);
+        }
+
+        public async Task<IDataResult<CarDetailDto>> GetCarDetailsById(Guid carId)
+        {
+            var cars = await _carDal.GetCarDetails();
+            var result = cars.Where(c => c.CarId == carId).SingleOrDefault();
+
+            return new SuccessDataResult<CarDetailDto>(result, Messages.CarDetails);
         }
 
         public async Task<IDataResult<List<Car>>> GetCarsByBrandId(Guid brandId)
         {
             return new SuccessDataResult<List<Car>>(await _carDal.GetAll(c => c.BrandId == brandId));
         }
+
+
 
         public async Task<IDataResult<List<Car>>> GetCarsByColorId(Guid colorId)
         {
@@ -93,6 +119,6 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
-       
+      
     }
 }

@@ -19,5 +19,8 @@ namespace Business.Abstract
         Task<IResult> Delete(Car car);
         Task<IResult> Update(Car car);
         Task<IDataResult<List<CarDetailDto>>> GetCarDetails();
+        Task<IDataResult<List<CarDetailDto>>> GetCarDetailsByBrandId(Guid brandId);
+        Task<IDataResult<List<CarDetailDto>>> GetCarDetailsByColorId(Guid colorId);
+        Task <IDataResult<CarDetailDto>> GetCarDetailsById(Guid carId);
     }
 }
