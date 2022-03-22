@@ -178,5 +178,20 @@ namespace WebAPI.Controllers
                 return BadRequest(result);
             }
         }
+
+        [HttpGet("bybrandandcolor")]
+        public async Task<IActionResult> GetCarDetailsByBrandAndColorId(Guid colorId, Guid brandId)
+        {
+            var result = await _carService.GetCarsWithBrandIdAndColorId(brandId, colorId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+
+        }
     }
 }

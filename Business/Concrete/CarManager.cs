@@ -111,6 +111,7 @@ namespace Business.Concrete
         }
 
 
+
         [SecuredOperation("admin")]
         [CacheRemoveAspect("ICarService.Get")] //remove all cache that include the "Get" keyword, Get, GetAll,GetById etc..
         public async Task<IResult> Update(Car car)
@@ -119,6 +120,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
-      
+  
+        public async Task<IDataResult<List<CarDetailDto>>> GetCarsWithBrandIdAndColorId(Guid brandId, Guid colorId)
+        {
+            var result = await _carDal.GetCarDetails(c => c.ColorId == colorId && c.BrandId == brandId);
+            return new SuccessDataResult<List<CarDetailDto>>(result);
+        }
     }
 }

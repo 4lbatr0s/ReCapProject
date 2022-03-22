@@ -22,5 +22,6 @@ namespace Business.Abstract
         Task<IDataResult<List<CarDetailDto>>> GetCarDetailsByBrandId(Guid brandId);
         Task<IDataResult<List<CarDetailDto>>> GetCarDetailsByColorId(Guid colorId);
         Task <IDataResult<CarDetailDto>> GetCarDetailsById(Guid carId);
+        Task<IDataResult<List<CarDetailDto>>> GetCarsWithBrandIdAndColorId(Guid brandId, Guid colorId);
     }
 }
